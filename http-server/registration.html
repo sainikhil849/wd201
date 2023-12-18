@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>User Registration</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .registration-form {
+      width: 50%;
+      padding: 20px;
+      border: 1px solid lightblue;
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 50%;
+      text-align: center;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+    th {
+      background-color: grey;
+    }
+    .table-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="user-registration-form" class="registration-form">
+      <h1>User Registration Form</h1>
+      <table>
+        <tbody>
+          <tr>
+            <td>Name:</td>
+            <td><input type="text" id="reg-name" required></td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td><input type="email" id="reg-email" required></td>
+          </tr>
+          <tr>
+            <td>Password:</td>
+            <td><input type="password" id="reg-password" required></td>
+          </tr>
+          <tr>
+            <td>Date of Birth:</td>
+            <td><input type="date" id="reg-dob" required></td>
+          </tr>
+          <tr>
+            <td>Accept Terms:</td>
+            <td><input type="checkbox" id="reg-terms" required></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <table id="user-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Date of Birth</th>
+          <th>Accepted Terms</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
