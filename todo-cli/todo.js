@@ -1,6 +1,6 @@
 const overdue = () => {
   const currentDate = new Date()
-  return all.filter(item => new Date(item.dueDate) < currentDate && !item.completed)
+  return all.filter(item => new Date(item.dueDate) <=currentDate && !item.completed)
  }
  
  const dueToday = () => {
