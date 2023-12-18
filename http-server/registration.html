@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Registration Page</title>
+  <title>User Registration</title>
   <style>
     .container {
       display: flex;
@@ -9,7 +9,7 @@
       align-items: center;
       height: 100vh;
     }
-    .reg-form {
+    .registration-form {
       width: 50%;
       padding: 20px;
       border: 1px solid lightblue;
@@ -36,33 +36,33 @@
 </head>
 <body>
   <div class="container">
-    <form id="reg-form" class="reg-form">
-      <h1>Registration Form</h1>
+    <form id="user-registration-form" class="registration-form">
+      <h1>User Registration Form</h1>
       <table>
         <tbody>
           <tr>
             <td>Name:</td>
-            <td><input type="text" id="name-input" required></td>
+            <td><input type="text" id="reg-name" required></td>
           </tr>
           <tr>
             <td>Email:</td>
-            <td><input type="email" id="email-input" required></td>
+            <td><input type="email" id="reg-email" required></td>
           </tr>
           <tr>
             <td>Password:</td>
-            <td><input type="password" id="password-input" required></td>
+            <td><input type="password" id="reg-password" required></td>
           </tr>
           <tr>
             <td>Date of Birth:</td>
-            <td><input type="date" id="dob-input" required></td>
+            <td><input type="date" id="reg-dob" required></td>
           </tr>
           <tr>
             <td>Accept Terms:</td>
-            <td><input type="checkbox" id="terms-checkbox" required></td>
+            <td><input type="checkbox" id="reg-terms" required></td>
           </tr>
         </tbody>
       </table>
-      <button type="button" onclick="submitRegistration()">Submit</button>
+      <button type="button" onclick="submitForm()">Submit</button>
     </form>
   </div>
 
@@ -82,12 +82,12 @@
   </div>
 
   <script>
-    function submitRegistration() {
-      const name = document.getElementById("name-input").value;
-      const email = document.getElementById("email-input").value;
-      const password = document.getElementById("password-input").value;
-      const dob = document.getElementById("dob-input").value;
-      const terms = document.getElementById("terms-checkbox").checked;
+    function submitForm() {
+      const name = document.getElementById("reg-name").value;
+      const email = document.getElementById("reg-email").value;
+      const password = document.getElementById("reg-password").value;
+      const dob = document.getElementById("reg-dob").value;
+      const terms = document.getElementById("reg-terms").checked;
 
       const table = document.getElementById("user-table").getElementsByTagName("tbody")[0];
       const newRow = table.insertRow(table.rows.length);
@@ -98,9 +98,10 @@
         cell.appendChild(document.createTextNode(cells[i]));
       }
 
-      document.getElementById("reg-form").reset();
+      document.getElementById("user-registration-form").reset();
     }
   </script>
 </body>
 </html>
+
 
