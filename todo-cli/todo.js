@@ -1,26 +1,34 @@
-const overdue = () => {
+const overdues = () => {
   const currentDate = new Date()
   return all.filter(item => new Date(item.dueDate) <=currentDate && !item.completed)
  }
  
- const dueToday = () => {
+ const itemsDueToday = () => {
   const currentDate = new Date()
   const start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
   const end = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
   return all.filter(item => new Date(item.dueDate) >= start && new Date(item.dueDate) < end && !item.completed)
  }
  
- const dueLater = () => {
+ const itemsDueLater = () => {
   const currentDate = new Date()
   const start = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
   return all.filter(item => new Date(item.dueDate) >= start && !item.completed)
  }
  
- const toDisplayableList = (list) => {
-  let formattedList = ''
-  list.forEach((item, index) => {
-     formattedList += `${index + 1}. ${item.title} - Due on ${item.dueDate}\n`
-  })
+const toDisplayableList = (list) => {
+    // Format the To-Do list here, and return the output string
+    // as per the format given above.
+    lst = list
+      .map(
+        (item) =>
+          `${item.completed ? "[x]" : "[ ]"} ${item.title} ${
+            item.dueDate == today ? "" : item.dueDate
+          }`
+      )
+      .join("\n");
+      return lst;
+  };
   return formattedList
  }
  
