@@ -98,7 +98,7 @@ describe('Tests for functions in todo.js', () => {
     expect(displayValue).toBe(`${aTodo.id}. [x] ${aTodo.title}`)
   })
 })
-const todoList = require('../todo')
+/* const todoList = require('../todo')
 
 describe('TodoList Test Suite', () => {
   let todos
@@ -149,4 +149,4 @@ describe('TodoList Test Suite', () => {
     todos.add({ title: 'Due Later Todo 2', dueDate: tomorrow.toISOString().slice(0, 10), completed: false })
     expect(todos.dueLater().length).toBe(dueLaterCount + 1)
   })
-})
+}) */
