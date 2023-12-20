@@ -1,75 +1,116 @@
-/* eslint-disable no-unused-vars */
-// __tests__/todo.test.js
-/* eslint-disable no-undef */
+// Import the todoList module
+const todoList = require("../todo");
 
-const db = require('../models')
+// Declare the todos variable
+let todos;
 
-const getJSDate = (days) => {
-  if (!Number.isInteger(days)) {
-    throw new Error('Need to pass an integer as days')
-  }
-  const today = new Date()
-  const oneDay = 60 * 60 * 24 * 1000
-  return new Date(today.getTime() + days * oneDay)
-}
+// Set up the test suite
+beforeEach(() => {
+  // Initialize todos before each test
+  todos = todoList();
+});
 
-describe('Tests for functions in todo.js', () => {
-  beforeAll(async () => {
-    await db.sequelize.sync({ force: true })
-  })
+// Main test suite for TodoList
+describe("TodoList Test Suite", () => {
+  // Test: Should add new todo
+  test("Should add new todo", () => {
+    // Get the initial count of todo items
+    const todoItemsCount = todos.all.length;
 
-  test('Todo.addTask should add a new task and increase the count', async () => {
-    const initialCount = await db.Todo.count()
-    await db.Todo.addTask({
-      title: 'New Task',
-      dueDate: getJSDate(2),
-      completed: false
-    })
-    const finalCount = await db.Todo.count()
-    expect(finalCount).toBe(initialCount + 1)
-  })
+    // Add a new todo
+    todos.add({
+      title: "Test todo 2",
+      completed: false,
+      dueDate: "2023-12-20",
+    });
 
-  test('Todo.markAsComplete should mark a task as complete', async () => {
-    const task = await db.Todo.addTask({
-      title: 'Incomplete Task',
-      dueDate: getJSDate(2),
-      completed: false
-    })
-    expect(task.completed).toBe(false)
-    await db.Todo.markAsComplete(task.id)
-    await task.reload()
-    expect(task.completed).toBe(true)
-  })
+    // Expect the count to increase by 1 after adding a new todo
+    expect(todos.all.length).toBe(todoItemsCount + 1);
+  });
 
-  test('Todo.overdue should return overdue tasks (including completed ones)', async () => {
-    await db.Todo.addTask({
-      title: 'Overdue Task',
-      dueDate: getJSDate(-2),
-      completed: false
-    })
-    const overdueTasks = await db.Todo.overdue()
-    expect(overdueTasks.length).toBe(1)
-  })
+  // Test: Should mark a todo as complete
+  test("Should mark a todo as complete", () => {
+    // Add a new todo
+    todos.add({
+      title: "Test todo",
+      completed: false,
+      dueDate: "2023-12-20",
+    });
 
-  test('Todo.dueToday should return tasks due today (including completed ones)', async () => {
-    await db.Todo.addTask({
-      title: 'Due Today Task',
-      dueDate: getJSDate(0),
-      completed: false
-    })
-    const dueTodayTasks = await db.Todo.dueToday()
-    expect(dueTodayTasks.length).toBe(1)
-  })
+    // Expect the initial completion status to be false
+    expect(todos.all[0].completed).toBe(false);
 
-  test('Todo.dueLater should return tasks due on a future date (including completed ones)', async () => {
-    await db.Todo.addTask({
-      title: 'Due Later Task',
-      dueDate: getJSDate(2),
-      completed: false
-    })
-    const dueLaterTasks = await db.Todo.dueLater()
-    expect(dueLaterTasks.length).toBe(1)
-  })
- 
-  // Add more test cases as needed
-})
+    // Mark the todo as complete
+    todos.markAsComplete(0);
+
+    // Expect the completion status to be true after marking as complete
+    expect(todos.all[0].completed).toBe(true);
+  });
+
+  // Test: Should retrieve overdue items
+  test("Should retrieve overdue items", () => {
+    // Get today's date
+    const dateToday = new Date();
+    const formattedDate = (d) => d.toISOString().split("T")[0];
+    const yesterday = formattedDate(new Date(dateToday.setDate(dateToday.getDate() - 1)));
+
+    // Get the initial count of overdue items
+    const overDueTodoItemsCount = todos.overdue().length;
+
+    // Add an overdue item
+    const overdueAdd = {
+      title: "Complete my assignment",
+      dueDate: yesterday,
+      completed: false,
+    };
+    todos.add(overdueAdd);
+
+    // Expect the count of overdue items to increase by 1 after adding an overdue item
+    expect(todos.overdue().length).toEqual(overDueTodoItemsCount + 1);
+  });
+
+  // Test: Should retrieve due today items
+  test("Should retrieve due today items", () => {
+    // Get today's date
+    const dateToday = new Date();
+    const formattedDate = (d) => d.toISOString().split("T")[0];
+    const today = formattedDate(dateToday);
+
+    // Get the initial count of due today items
+    const DueTodayTodoItemsCount = todos.dueToday().length;
+
+    // Add a due today item
+    const todayAdd = {
+      title: "Complete this milestone",
+      dueDate: today,
+      completed: false,
+    };
+    todos.add(todayAdd);
+
+    // Expect the count of due today items to increase by 1 after adding a due today item
+    expect(todos.dueToday().length).toEqual(DueTodayTodoItemsCount + 1);
+  });
+
+  // Test: Should retrieve due later items
+  test("Should retrieve due later items", () => {
+    // Get today's date
+    const dateToday = new Date();
+    const formattedDate = (d) => d.toISOString().split("T")[0];
+    const tomorrow = formattedDate(new Date(dateToday.setDate(dateToday.getDate() + 1)));
+
+    // Get the initial count of due later items
+    const DueLaterTodoItemsCount = todos.dueLater().length;
+
+    // Add a due later item
+    const laterAdd = {
+      title: "Prepare for sem exams",
+      dueDate: tomorrow,
+      completed: false,
+    };
+    todos.add(laterAdd);
+
+    // Expect the count of due later items to increase by 1 after adding a due later item
+    expect(todos.dueLater().length).toEqual(DueLaterTodoItemsCount + 1);
+  });
+});
+
