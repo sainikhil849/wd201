@@ -1,0 +1,68 @@
+/* Reset default styles and set font */
+body {
+    font-family: "Courier New", Courier, monospace;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Custom Header styles */
+  header {
+    background-color: #333;
+    color: gray;
+    padding: 1em;
+  }
+  
+  /* Stylish Heading within the header */
+  header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Stylish Table with alternating row colors */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1em;
+  }
+  
+  /* Table Header and Cells Styling */
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Header Cell Styling */
+  th {
+    background-color: #4CAF50;
+    color: gray;
+    font-weight: bold;
+  }
+  
+  /* Alternate Row Colors for better visibility */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Unique Footer Design */
+  footer {
+    background-color: #333;
+    color: gray;
+    padding: 1em;
+    margin-top: 1em;
+  }
+  
+  /* Footer Paragraph Styling */
+  footer p {
+    margin: 0;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  
+  /* Footer Separation Line */
+  footer {
+    border-top: 1px solid gray;
+  }
+  
