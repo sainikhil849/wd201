@@ -1,5 +1,4 @@
 "use strict";
-
 const { Model } = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -11,28 +10,28 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static addTask({ title, dueDate, userId }) {
-      return this.create({ title, dueDate, isCompleted: false, userId });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({ title, dueDate, completed: false, userId });
     }
 
-    static async fetchTasks() {
+    static async getTodos() {
       return await this.findAll();
     }
 
-    updateCompletionStatus(status) {
-      return this.update({ isCompleted: status });
+    setCompletionStatus(bool) {
+      return this.update({ completed: bool });
     }
 
-    static async getCompletedTasks(userId) {
+    static async completedItems(userId) {
       return await this.findAll({
         where: {
-          isCompleted: true,
+          completed: true,
           userId
         },
       });
     }
 
-    static async deleteTask(id) {
+    static async remove(id) {
       return this.destroy({
         where: {
           id,
@@ -40,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async findOverdueTasks(userId) {
+    static async overdue(userId) {
       const currentDate = new Date();
       return await this.findAll({
         where: {
@@ -48,13 +47,13 @@ module.exports = (sequelize, DataTypes) => {
             [Op.lt]: currentDate,
           },
           userId,
-          isCompleted: false,
+          completed: false,
         },
         order: [["id", "ASC"]],
       });
     }
 
-    static async findTasksDueToday(userId) {
+    static async dueToday(userId) {
       const currentDate = new Date();
       const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
       const tomorrow = new Date(today);
@@ -66,20 +65,20 @@ module.exports = (sequelize, DataTypes) => {
             [Op.lt]: tomorrow,
           },
           userId,
-          isCompleted: false,
+          completed: false,
         },
         order: [["id", "ASC"]],
       });
     }
 
-    static async findTasksDueLater(userId) {
+    static async dueLater(userId) {
       return await this.findAll({
         where: {
           dueDate: {
             [Op.gt]: new Date(),
           },
           userId,
-          isCompleted: false,
+          completed: false,
         },
         order: [["id", "ASC"]],
       });
@@ -90,12 +89,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       dueDate: DataTypes.DATEONLY,
-      isCompleted: DataTypes.BOOLEAN,
+      completed: DataTypes.BOOLEAN,
     },
     {
       sequelize,
       modelName: "Todo",
     }
   );
+
   return Todo;
 };
